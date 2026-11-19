@@ -1,0 +1,9 @@
+dist
+coverage
+node_modules
+data
+public/tv/app.js
+package-lock.json
+android-tv/.gradle
+android-tv/build
+android-tv/app/build

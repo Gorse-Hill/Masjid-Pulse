@@ -1,0 +1,13 @@
+node_modules
+dist
+coverage
+data
+docs
+android-tv
+assets
+.git
+.github
+.env
+.env.*
+*.log
+public/tv/app.js

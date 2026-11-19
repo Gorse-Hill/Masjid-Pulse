@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Masjid Pulse</string>
+    <string name="settings_title">Masjid Pulse server</string>
+    <string name="settings_message">Enter the address of your Masjid Pulse server, e.g. https://pulse.example.org</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="exit_app">Exit app</string>
+    <string name="reset_pairing">Reset pairing</string>
+    <string name="invalid_url">That does not look like a valid http(s) address</string>
+</resources>

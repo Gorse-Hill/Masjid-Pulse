@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#01534A" />
+    <title>Masjid Pulse TV</title>
+    <link rel="icon" href="/icons/icon-192.png" />
+    <link rel="stylesheet" href="/tv/tv.css" />
+  </head>
+  <body>
+    <section id="pairing" class="screen" hidden>
+      <img class="brand-logo" src="/brand/logo.png" alt="Masjid Pulse" />
+      <p class="lead">To connect this screen, open the Masjid Pulse admin, go to <b>Devices</b> and enter:</p>
+      <div id="pair-code" class="pair-code">-----</div>
+      <p id="pair-info" class="sub"></p>
+    </section>
+
+    <section id="waiting" class="screen" hidden>
+      <img class="brand-logo" src="/brand/logo.png" alt="Masjid Pulse" />
+      <p class="lead">Connected. Waiting for the mosque to publish prayer times…</p>
+    </section>
+
+    <section id="display" class="display" hidden>
+      <header class="top">
+        <img class="emblem" src="/brand/tv-emblem.png" alt="" />
+        <div>
+          <div id="mosque-name" class="mosque"></div>
+          <div id="date" class="date"></div>
+        </div>
+        <div id="clock" class="clock">--:--</div>
+      </header>
+      <div class="body">
+        <div class="left">
+          <div id="next" class="next"></div>
+          <table class="prayers">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Adhan</th>
+                <th>Iqamah</th>
+              </tr>
+            </thead>
+            <tbody id="prayer-rows"></tbody>
+          </table>
+          <div id="jummah" class="jummah"></div>
+        </div>
+        <aside id="rotation" class="rotation"></aside>
+      </div>
+      <footer class="foot">
+        <span class="foot-brand">Masjid <b>Pulse</b></span>
+        <span id="conn" class="conn"></span>
+        <span id="updated"></span>
+      </footer>
+    </section>
+    <!-- Classic ES5 script, not an ES module: old Smart-TV browsers such as LG webOS 3-4 (Chromium 38-53). -->
+    <script src="/tv/app.js"></script>
+  </body>
+</html>

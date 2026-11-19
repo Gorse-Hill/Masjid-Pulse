@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Masjid Pulse - free prayer-time TV display for mosques</title>
+    <link rel="icon" href="/icons/favicon-48.png" />
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        margin: 0;
+        background: #fefef7;
+        color: #161d20;
+      }
+      .bar {
+        background: #01534a;
+        height: 12px;
+        box-shadow: 0 4px 0 #fd2d25;
+      }
+      .logo {
+        width: 100%;
+        max-width: 340px;
+        display: block;
+      }
+      .sr {
+        position: absolute;
+        left: -9999px;
+      }
+      main {
+        max-width: 760px;
+        margin: 0 auto;
+        padding: 32px 20px;
+      }
+      h2 {
+        color: #01534a;
+      }
+      p {
+        font-size: 1.15rem;
+        line-height: 1.6;
+      }
+      a.btn {
+        display: inline-block;
+        margin: 8px 12px 8px 0;
+        padding: 14px 22px;
+        border-radius: 10px;
+        background: #d61f18;
+        color: #fff;
+        font-weight: 700;
+        text-decoration: none;
+      }
+      a.btn.alt {
+        background: transparent;
+        color: #01534a;
+        border: 2px solid #01534a;
+      }
+      ol {
+        background: #f4eedc;
+        border-radius: 12px;
+        padding: 16px 16px 16px 40px;
+        border-top: 6px solid #01534a;
+      }
+      ol li {
+        margin: 8px 0;
+        font-size: 1.05rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bar"></div>
+    <main>
+      <img class="logo" src="/brand/logo.png" alt="Masjid Pulse" />
+      <h1 class="sr">Masjid Pulse</h1>
+      <p>
+        A free prayer-time display for your mosque TV. Accurate, readable from the back of the hall, works
+        offline, and is easy for any volunteer to update from a phone.
+      </p>
+      <a class="btn" href="/admin/#/register">Register your mosque</a>
+      <a class="btn alt" href="/admin/">Admin login</a>
+      <a class="btn alt" href="/tv/">Open TV display</a>
+      <h2>Set up in three steps</h2>
+      <ol>
+        <li>Register your mosque and enter today's adhan and iqamah times.</li>
+        <li>Open <code>/tv/</code> on the TV (or install the Android TV app). It shows a 5-digit code.</li>
+        <li>In the admin, go to <b>Devices</b>, type the code, then press <b>Publish</b>.</li>
+      </ol>
+      <p><small>Install after Maghrib, connect before Isha, trust it before Fajr.</small></p>
+    </main>
+  </body>
+</html>

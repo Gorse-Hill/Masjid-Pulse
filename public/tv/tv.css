@@ -1,0 +1,306 @@
+/* TV display: large, high-contrast, readable from the back of a prayer hall (16:9).
+   Primary brand colours (sampled from the logo): deep green #01534A, bright red #FD2D25,
+   TV black #161D20, off-white #FEFEF7. Layout echoes the brand mockup (header bar, light panel, heartbeat line). */
+/* Old-TV compatibility (LG webOS 3.x = Chromium 38, webOS 4.x = Chromium 53): no CSS custom properties
+   (Chromium 49+), no flexbox `gap` (Chromium 84+) and no grid (Chromium 57+). Colours are literal and
+   spacing uses margins; tests/unit/tv-bundle.test.ts enforces this.
+   Palette: bg #161d20, panel #263035, muted #d5dcd8, off-white #fefef7, green #01534a,
+   green-bright #0a7a6c, red #fd2d25, red-dark #d61f18, red-light #ff8a83, warn #ffb0ab. */
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  margin: 0;
+  height: 100%;
+  background: #161d20;
+  color: #ffffff;
+  font-family: 'Segoe UI', Roboto, 'Noto Sans', Arial, sans-serif;
+  overflow: hidden;
+  cursor: none;
+}
+[hidden] {
+  display: none !important;
+}
+
+/* Pairing / waiting: off-white brand screen with the primary logo */
+.screen {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 3vw;
+  background: #fefef7;
+  color: #161d20;
+  border-top: 2.2vh solid #01534a;
+  border-bottom: 2.2vh solid #fd2d25;
+}
+.brand-logo {
+  height: 40vh;
+  margin-bottom: 1vh;
+}
+.lead {
+  font-size: 2.4vw;
+  max-width: 78vw;
+  line-height: 1.4;
+  margin: 1vh 0;
+}
+.sub {
+  font-size: 1.8vw;
+  color: #4a5350;
+}
+.pair-code {
+  font-size: 11vw;
+  font-weight: 800;
+  letter-spacing: 3vw;
+  color: #01534a;
+  background: #fff;
+  border: 0.5vw solid #fd2d25;
+  border-radius: 2vw;
+  padding: 0.3vh 2vw 0.3vh 5vw;
+  font-variant-numeric: tabular-nums;
+  margin: 1vh 0;
+}
+
+/* Main display */
+.display {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 0 2.5vw 1.6vh;
+}
+.display > * + * {
+  margin-top: 2vh;
+}
+.top {
+  display: flex;
+  align-items: center;
+  background: #01534a;
+  margin: 0 -2.5vw;
+  padding: 1.4vh 2.5vw;
+  box-shadow: 0 0.6vh 0 #fd2d25;
+}
+.top > * + * {
+  margin-left: 1.6vw;
+}
+.emblem {
+  height: 9vh;
+  background: #fefef7;
+  border-radius: 0.8vw;
+  padding: 0.3vh 0.4vw;
+}
+.top > div:not(.clock) {
+  flex: 1;
+  min-width: 0;
+}
+.mosque {
+  font-size: 3vw;
+  font-weight: 800;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.date {
+  font-size: 1.8vw;
+  color: #d8ece8;
+  margin-top: 0.4vh;
+}
+.clock {
+  font-size: 7vw;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  color: #fff;
+}
+.body {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+  padding-top: 1vh;
+}
+.body > * + * {
+  margin-left: 2.5vw;
+}
+.left {
+  overflow: hidden;
+  flex: 1.25;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.left > * + * {
+  margin-top: 1.4vh;
+}
+.next {
+  background: #263035;
+  border-radius: 1.2vw;
+  padding: 1.4vh 2vw;
+  font-size: 2.6vw;
+  font-weight: 700;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-left: 0.8vw solid #0a7a6c;
+}
+.next .count {
+  font-size: 4vw;
+  font-variant-numeric: tabular-nums;
+  color: #fff;
+}
+.next.iqamah {
+  background: #d61f18;
+  border-left-color: #fff;
+}
+.next.inprayer {
+  background: #01534a;
+  justify-content: center;
+}
+table.prayers {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 0.7vh;
+  font-size: 3vw;
+}
+.prayers th {
+  font-size: 1.6vw;
+  color: #d5dcd8;
+  text-align: right;
+  font-weight: 600;
+  padding: 0 1.5vw;
+}
+.prayers td {
+  background: #263035;
+  padding: 0.6vh 1.5vw;
+  font-variant-numeric: tabular-nums;
+}
+.prayers td:first-child {
+  border-radius: 1vw 0 0 1vw;
+  font-weight: 700;
+}
+.prayers td:last-child {
+  border-radius: 0 1vw 1vw 0;
+}
+.prayers td.t {
+  text-align: right;
+}
+.prayers td.iq {
+  color: #ff8a83;
+  font-weight: 700;
+}
+.prayers tr.current td {
+  background: #01534a;
+}
+.prayers tr.current td.iq {
+  color: #fff;
+}
+.prayers tr.upcoming td:first-child {
+  box-shadow: inset 0.6vw 0 0 #fd2d25;
+}
+.badge {
+  font-size: 1.3vw;
+  color: #ffb0ab;
+  margin-left: 1vw;
+  vertical-align: middle;
+}
+.jummah {
+  background: #263035;
+  border-radius: 1vw;
+  padding: 1.1vh 1.5vw;
+  font-size: 1.6vw;
+  display: flex;
+  flex-wrap: wrap;
+  border-left: 0.6vw solid #0a7a6c;
+}
+.jummah > * {
+  margin: 0.15vh 2.5vw 0.15vh 0;
+}
+.jummah b {
+  color: #ff8a83;
+}
+.rotation {
+  flex: 1;
+  background: #fefef7;
+  color: #161d20;
+  border-radius: 1.2vw;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border-top: 1.2vh solid #01534a;
+}
+.rotation .ann {
+  padding: 3vw;
+  text-align: center;
+}
+.rotation .ann h2 {
+  font-size: 3.2vw;
+  color: #01534a;
+  margin: 0 0 2vh;
+}
+.rotation .ann h2::after {
+  content: '';
+  display: block;
+  height: 3vh;
+  margin: 1vh auto 0;
+  width: 60%;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 40' preserveAspectRatio='none'%3E%3Cpolyline fill='none' stroke='%23FD2D25' stroke-width='3' points='0,22 150,22 165,22 175,6 188,36 200,12 210,22 400,22'/%3E%3C/svg%3E")
+    no-repeat center / 100% 100%;
+}
+.rotation .ann p {
+  font-size: 2.3vw;
+  line-height: 1.45;
+  margin: 0;
+  white-space: pre-wrap;
+}
+.rotation img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #000;
+}
+.rotation .cap {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(1, 83, 74, 0.92);
+  color: #fff;
+  font-size: 1.8vw;
+  padding: 1vh 1.5vw;
+  text-align: center;
+}
+.rotation .empty {
+  font-size: 2.6vw;
+  color: #01534a;
+  font-weight: 700;
+  text-align: center;
+  padding: 2vw;
+}
+.foot {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.4vw;
+  color: #d5dcd8;
+}
+.foot > * + * {
+  margin-left: 2vw;
+}
+.foot-brand {
+  font-weight: 800;
+  color: #fff;
+}
+.foot-brand b {
+  color: #fd2d25;
+}
+.conn.offline {
+  color: #ffb0ab;
+  font-weight: 700;
+}
+.stale {
+  color: #ffb0ab;
+  font-weight: 700;
+}

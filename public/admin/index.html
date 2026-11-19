@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#01534A" />
+    <title>Masjid Pulse Admin</title>
+    <link rel="manifest" href="/admin/manifest.webmanifest" />
+    <link rel="icon" href="/icons/favicon-48.png" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    <link rel="stylesheet" href="/admin/styles.css" />
+  </head>
+  <body>
+    <header id="topbar" hidden>
+      <a class="brand" href="#/today"
+        ><img src="/brand/tv-emblem.png" alt="" /><span>Masjid <b>Pulse</b></span></a
+      >
+      <select id="mosque-switch" aria-label="Mosque"></select>
+      <button id="menu-btn" class="ghost" aria-label="Menu">☰</button>
+      <nav id="nav">
+        <a href="#/today">Today</a>
+        <a href="#/prayers">Prayer times</a>
+        <a href="#/jummah">Jummah</a>
+        <a href="#/announcements">Announcements</a>
+        <a href="#/slides">Slides</a>
+        <a href="#/devices" data-min="admin">Devices</a>
+        <a href="#/users" data-min="admin">Users</a>
+        <a href="#/audit" data-min="admin">Audit log</a>
+        <a href="#/settings">Settings</a>
+        <a href="#/logout">Log out</a>
+      </nav>
+    </header>
+    <div id="toast" role="status" aria-live="polite"></div>
+    <main id="view">Loading…</main>
+    <script type="module" src="/admin/app.js"></script>
+  </body>
+</html>

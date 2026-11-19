@@ -1,0 +1,9 @@
+node_modules/
+dist/
+coverage/
+data/
+*.log
+.env
+public/tv/app.js
+.env.*
+!.env.example
