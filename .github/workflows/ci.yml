@@ -37,6 +37,7 @@ jobs:
 
   android:
     runs-on: ubuntu-latest
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -63,14 +64,37 @@ jobs:
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim
           disable-animations: true
           script: |
-            adb install -r android-tv/app/build/outputs/apk/debug/app-debug.apk
+            echo "=== Waiting for boot_completed ==="
+            for i in $(seq 1 36); do
+              boot=$(adb shell getprop sys.boot_completed 2>/dev/null | tr -d '\r')
+              echo "boot_completed=$boot (attempt $i)"
+              if [ "$boot" = "1" ]; then break; fi
+              sleep 5
+            done
+            echo "=== Install APK ==="
+            adb install -r android-tv/app/build/outputs/apk/debug/app-debug.apk || exit 1
+            echo "=== Launch MainActivity ==="
             adb shell am force-stop com.masjidpulse.tv || true
-            adb shell monkey -p com.masjidpulse.tv 1
-            sleep 12
-            adb shell pidof com.masjidpulse.tv
-            adb shell dumpsys activity activities | grep -E 'com.masjidpulse.tv/.MainActivity|mResumedActivity'
-            adb logcat -d -s MasjidPulse AndroidRuntime chromium > android-tv-runtime.log
-            adb exec-out screencap -p > android-tv-runtime.png
+            adb shell am start -n com.masjidpulse.tv/.MainActivity || exit 1
+            echo "=== Wait for process ==="
+            for i in $(seq 1 18); do
+              if adb shell pidof com.masjidpulse.tv >/dev/null 2>&1; then
+                echo "Process found on attempt $i"
+                adb shell pidof com.masjidpulse.tv
+                break
+              fi
+              echo "No process yet (attempt $i)"
+              sleep 5
+            done
+            echo "=== Diagnostics ==="
+            adb shell dumpsys activity activities | grep -E 'com.masjidpulse.tv|mResumedActivity|mFocusedApp' || true
+            adb shell dumpsys window windows | grep -E 'mCurrentFocus|mFocusedApp' || true
+            adb logcat -d -s MasjidPulse AndroidRuntime chromium > android-tv-runtime.log || true
+            adb exec-out screencap -p > android-tv-runtime.png || true
+            if ! adb shell pidof com.masjidpulse.tv >/dev/null 2>&1; then
+              echo "ERROR: com.masjidpulse.tv process not running after wait"
+              exit 1
+            fi
       - uses: actions/upload-artifact@v4
         if: always()
         with:
