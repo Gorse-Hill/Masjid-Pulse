@@ -339,7 +339,9 @@ export function contentRouter({ db, config }: Ctx): Router {
     'SELECT id, title, kind, method, account, note, created_at AS createdAt FROM donations';
   r.get('/donations', editor, (req, res) => {
     res.json(
-      db.prepare(`${donationSelect} WHERE mosque_id = ? AND deleted_at IS NULL ORDER BY id`).all(req.mosqueId!),
+      db
+        .prepare(`${donationSelect} WHERE mosque_id = ? AND deleted_at IS NULL ORDER BY id`)
+        .all(req.mosqueId!),
     );
   });
   r.post('/donations', editor, (req, res) => {
@@ -348,15 +350,7 @@ export function contentRouter({ db, config }: Ctx): Router {
       .prepare(
         'INSERT INTO donations (mosque_id, title, kind, method, account, note, created_by) VALUES (?, ?, ?, ?, ?, ?, ?)',
       )
-      .run(
-        req.mosqueId!,
-        b.title,
-        b.kind,
-        b.method || null,
-        b.account || null,
-        b.note || null,
-        req.user!.id,
-      );
+      .run(req.mosqueId!, b.title, b.kind, b.method || null, b.account || null, b.note || null, req.user!.id);
     bumpRevision(db, req.mosqueId!);
     logAudit(db, {
       mosqueId: req.mosqueId!,

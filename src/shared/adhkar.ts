@@ -44,8 +44,7 @@ const POST: AdhkarSet = {
     },
     {
       arabic: 'سُبْحَانَ اللَّهِ · الْحَمْدُ لِلَّهِ · اللَّهُ أَكْبَرُ',
-      somali:
-        'Alle ayaa ka nasahan nusqaan, Mahad oo dhan Alle ayaa leh, Alle ayaa ugu weyn.',
+      somali: 'Alle ayaa ka nasahan nusqaan, Mahad oo dhan Alle ayaa leh, Alle ayaa ugu weyn.',
       note: '33 jeer mid kasta · 33 times each',
     },
     {
@@ -64,8 +63,7 @@ const POST: AdhkarSet = {
 };
 
 const QULS: AdhkarItem = {
-  arabic:
-    'قُلْ هُوَ اللَّهُ أَحَدٌ · قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ · قُلْ أَعُوذُ بِرَبِّ النَّاسِ',
+  arabic: 'قُلْ هُوَ اللَّهُ أَحَدٌ · قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ · قُلْ أَعُوذُ بِرَبِّ النَّاسِ',
   somali: 'Akhri Suuradda Al-Ikhlaas, Al-Falaq iyo An-Naas.',
   note: '3 jeer mid kasta · 3 times each',
 };
@@ -96,8 +94,7 @@ const MORNING: AdhkarSet = {
         'Allahayow adiga ayaan ku waaberiisannay, adiga ayaanna ku galabaysannaa; adiga ayaan ku noolnahay, adiga ayaanna ku dhimanaynaa, xaggaaga ayaana loo soo bixi doonaa.',
     },
     {
-      arabic:
-        'اللَّهُمَّ إِنِّي أَسْأَلُكَ عِلْماً نَافِعاً، وَرِزْقاً طَيِّباً، وَعَمَلاً مُتَقَبَّلاً',
+      arabic: 'اللَّهُمَّ إِنِّي أَسْأَلُكَ عِلْماً نَافِعاً، وَرِزْقاً طَيِّباً، وَعَمَلاً مُتَقَبَّلاً',
       somali:
         'Allahayow waxaan ku weydiisanayaa cilmi anfaca leh, risiq wanaagsan (xalaal ah), iyo camal la aqbalo.',
     },

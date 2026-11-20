@@ -165,7 +165,6 @@ function hijri(date) {
   }
 }
 
-
 const ADHAN_BANNER_SEC = 60;
 function updateAdhanBanner(days, now) {
   const box = $('adhan-banner');
@@ -328,7 +327,8 @@ function nextSlide() {
   if (it.kind === 'announcement') {
     box.innerHTML = `<div class="ann"><h2>${esc(it.item.title)}</h2><p>${esc(it.item.body)}</p></div>`;
   } else if (it.kind === 'donation') {
-    const kind = it.item.kind === 'fundraising' ? 'Fundraising' : it.item.kind === 'payment' ? 'Payment' : 'Donation';
+    const kind =
+      it.item.kind === 'fundraising' ? 'Fundraising' : it.item.kind === 'payment' ? 'Payment' : 'Donation';
     box.innerHTML = `<div class="ann don"><h2>${esc(it.item.title)}</h2>
       <p class="pay">${esc(kind)}${it.item.method ? ' · ' + esc(it.item.method) : ''}</p>
       <p class="num">${esc(it.item.account || '')}</p>
@@ -380,7 +380,6 @@ function updateAdhkar(days, now) {
   $('adhkar-count').textContent = adhkarState.index + 1 + ' / ' + win.set.items.length;
 }
 
-
 let welcomed = false;
 function playWelcome(then) {
   if (welcomed) return then();
@@ -404,7 +403,9 @@ function startWaqafFlash() {
     if (!box || $('display').hidden) return;
     if (adhkar && !adhkar.hidden) return;
     box.hidden = false;
-    setTimeout(() => { box.hidden = true; }, FLASH_FOR_MS);
+    setTimeout(() => {
+      box.hidden = true;
+    }, FLASH_FOR_MS);
   }, FLASH_EVERY_MS);
 }
 

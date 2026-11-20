@@ -689,7 +689,6 @@ async function renderJummah() {
   });
 }
 
-
 async function renderDonations() {
   const rows = await api(mpath('/donations'));
   view.innerHTML = `
@@ -713,7 +712,9 @@ async function renderDonations() {
       ${
         rows
           .map(
-            (d) => `<tr><td><b>${esc(d.title)}</b><br><span class="muted">${esc(d.kind)}${d.method ? ' · ' + esc(d.method) : ''}</span></td>
+            (
+              d,
+            ) => `<tr><td><b>${esc(d.title)}</b><br><span class="muted">${esc(d.kind)}${d.method ? ' · ' + esc(d.method) : ''}</span></td>
         <td><b>${esc(d.account || '—')}</b><br><span class="muted">${esc(d.note || '')}</span></td>
         <td><button class="danger" data-del="${d.id}">Delete</button></td></tr>`,
           )
