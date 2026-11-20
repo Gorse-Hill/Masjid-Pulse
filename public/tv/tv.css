@@ -357,3 +357,8 @@ table.prayers {
   font-size: 1.4vw;
   color: #d8ece8;
 }
+
+.brand-logo.small { height: 22vh; }
+.foot-credit { font-weight: 700; color: #d8ece8; }
+.rotation .don .pay { font-size: 2vw; color: #01534a; margin: 1vh 0 0; }
+.rotation .don .num { font-size: 4.2vw; font-weight: 800; color: #fd2d25; margin: 1.4vh 0; letter-spacing: 0.04em; }
