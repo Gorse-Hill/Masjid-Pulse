@@ -9,6 +9,16 @@
     <link rel="stylesheet" href="/tv/tv.css" />
   </head>
   <body>
+    <section id="welcome" class="screen" hidden>
+      <div id="welcome-logo">
+        <img class="brand-logo" src="/brand/logo.png" alt="Masjid Pulse" />
+      </div>
+      <div id="welcome-credit" hidden>
+        <img class="brand-logo small" src="/brand/logo.png" alt="" />
+        <p class="lead">This app is designed, Developed by Ahmed Gorse.</p>
+      </div>
+    </section>
+
     <section id="pairing" class="screen" hidden>
       <img class="brand-logo" src="/brand/logo.png" alt="Masjid Pulse" />
       <p class="lead">To connect this screen, open the Masjid Pulse admin, go to <b>Devices</b> and enter:</p>
@@ -49,6 +59,7 @@
       </div>
       <footer class="foot">
         <span class="foot-brand">Masjid <b>Pulse</b></span>
+        <span class="foot-credit">Designed by Ahmed Gorse</span>
         <span id="conn" class="conn"></span>
         <span id="updated"></span>
       </footer>
@@ -61,7 +72,6 @@
         <div id="adhkar-count" class="adhkar-count"></div>
       </div>
     </section>
-    <!-- Classic ES5 script, not an ES module: old Smart-TV browsers such as LG webOS 3-4 (Chromium 38-53). -->
     <script src="/tv/app.js"></script>
   </body>
 </html>
