@@ -10,6 +10,7 @@ import * as D from '../shared/tv-entry.ts';
 const POLL_MS = 30_000;
 const PAIR_POLL_MS = 3_000;
 const OFFLINE_AFTER_MS = 2 * 60_000;
+const ADHKAR_SLIDE_MS = 12_000;
 const KEY = {
   token: 'mp_tv_token',
   snapshot: 'mp_tv_snapshot',
@@ -61,6 +62,7 @@ let lastOk = store.get(KEY.lastOk) || 0;
 let paused = !!store.get(KEY.paused);
 let lastFetchFailed = false;
 let rotation = { items: [], index: -1, timer: null, sig: '' };
+let adhkarState = { key: '', index: 0, nextAt: 0 };
 
 function show(id) {
   for (const s of ['pairing', 'waiting', 'display']) $(s).hidden = s !== id;
@@ -250,6 +252,7 @@ function tick() {
   $('jummah').hidden = !snapshot.jummah.length;
 
   updateRotation(now.date);
+  updateAdhkar(days, now);
 
   const online = !lastFetchFailed && Date.now() - lastOk < OFFLINE_AFTER_MS;
   const conn = $('conn');
@@ -298,6 +301,47 @@ function nextSlide() {
     box.innerHTML = `<img src="${esc(mediaUrl(it.item.url))}" alt="" />${it.item.caption ? `<div class="cap">${esc(it.item.caption)}</div>` : ''}`;
   }
   rotation.timer = setTimeout(nextSlide, it.durationSec * 1000);
+}
+
+// Seconds after iqamah (or after adhan when iqamah is unset) for a prayer that is in the adhkar window.
+function adhkarNow(days, now) {
+  for (const d of days) {
+    const base = (Date.parse(d.date + 'T00:00:00Z') - Date.parse(now.date + 'T00:00:00Z')) / 1000;
+    for (const p of D.displayPrayersForDay(d, snapshot.jummah)) {
+      const iq = D.iqamahAbsMinutes(p);
+      const origin = iq === null ? D.adhanAbsMinutes(p) * 60 : iq * 60;
+      const after = now.seconds - (base + origin);
+      const set = D.adhkarWindow(p.key, after);
+      if (set) return { set, prayer: p };
+    }
+  }
+  return null;
+}
+
+function updateAdhkar(days, now) {
+  const box = $('adhkar');
+  if (!box) return;
+  const win = adhkarNow(days, now);
+  if (!win) {
+    box.hidden = true;
+    adhkarState.key = '';
+    return;
+  }
+  box.hidden = false;
+  const sig = win.set.key + ':' + win.prayer.key;
+  if (sig !== adhkarState.key) {
+    adhkarState = { key: sig, index: 0, nextAt: Date.now() + ADHKAR_SLIDE_MS };
+  } else if (Date.now() >= adhkarState.nextAt) {
+    adhkarState.index = (adhkarState.index + 1) % win.set.items.length;
+    adhkarState.nextAt = Date.now() + ADHKAR_SLIDE_MS;
+  }
+  const item = win.set.items[adhkarState.index];
+  $('adhkar-kicker').textContent = win.set.title + ' · ' + win.prayer.name;
+  $('adhkar-so-title').textContent = win.set.titleSo;
+  $('adhkar-ar').textContent = item.arabic;
+  $('adhkar-so').textContent = item.somali;
+  $('adhkar-note').textContent = item.note || '';
+  $('adhkar-count').textContent = adhkarState.index + 1 + ' / ' + win.set.items.length;
 }
 
 // ---------- Boot ----------
