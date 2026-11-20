@@ -689,6 +689,52 @@ async function renderJummah() {
   });
 }
 
+
+async function renderDonations() {
+  const rows = await api(mpath('/donations'));
+  view.innerHTML = `
+    <h1>Donations & payments</h1>
+    <p class="muted">These appear on the TV: fundraising notices and the mosque payment numbers.</p>
+    <div class="card"><h2>Add</h2><form id="f">
+      <label>Title</label><input name="title" maxlength="120" required placeholder="Friday collection / Masjid fund" />
+      <div class="row" style="margin-top:10px">
+        <div><label>Type</label><select name="kind">
+          <option value="donation">Donation collection</option>
+          <option value="fundraising">Fundraising</option>
+          <option value="payment">Payment number</option>
+        </select></div>
+        <div><label>Method</label><input name="method" maxlength="40" placeholder="Zaad, EVC Plus, eDahab, Bank" /></div>
+      </div>
+      <label style="margin-top:10px">Number / account</label><input name="account" maxlength="80" placeholder="e.g. 25263…" />
+      <label style="margin-top:10px">Note</label><textarea name="note" maxlength="400" placeholder="Optional extra text"></textarea>
+      <p><button>Add</button></p>
+    </form></div>
+    <div class="card"><table><thead><tr><th>On the TV</th><th>Number</th><th></th></tr></thead><tbody>
+      ${
+        rows
+          .map(
+            (d) => `<tr><td><b>${esc(d.title)}</b><br><span class="muted">${esc(d.kind)}${d.method ? ' · ' + esc(d.method) : ''}</span></td>
+        <td><b>${esc(d.account || '—')}</b><br><span class="muted">${esc(d.note || '')}</span></td>
+        <td><button class="danger" data-del="${d.id}">Delete</button></td></tr>`,
+          )
+          .join('') || '<tr><td colspan="3">No donations or payment numbers yet.</td></tr>'
+      }
+    </tbody></table></div>`;
+  $('#f').onsubmit = guard(async (e) => {
+    e.preventDefault();
+    await api(mpath('/donations'), { method: 'POST', body: formData(e.target) });
+    toast('Saved — remember to Publish');
+    renderDonations();
+  });
+  view.querySelectorAll('[data-del]').forEach((b) => {
+    b.onclick = guard(async () => {
+      if (!confirm('Remove this from the TV?')) return;
+      await api(mpath(`/donations/${b.dataset.del}`), { method: 'DELETE' });
+      renderDonations();
+    });
+  });
+}
+
 async function renderAnnouncements(params) {
   const rows = await api(mpath('/announcements'));
   const editing = rows.find((a) => String(a.id) === params.get('edit'));
@@ -941,6 +987,7 @@ const routes = {
   prayers: renderPrayers,
   jummah: renderJummah,
   announcements: renderAnnouncements,
+  donations: renderDonations,
   slides: renderSlides,
   devices: renderDevices,
   users: renderUsers,
