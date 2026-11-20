@@ -65,7 +65,7 @@ let rotation = { items: [], index: -1, timer: null, sig: '' };
 let adhkarState = { key: '', index: 0, nextAt: 0 };
 
 function show(id) {
-  for (const s of ['pairing', 'waiting', 'display']) $(s).hidden = s !== id;
+  for (const s of ['welcome', 'pairing', 'waiting', 'display']) $(s).hidden = s !== id;
 }
 
 // ---------- Pairing ----------
@@ -297,6 +297,12 @@ function nextSlide() {
   const it = items[rotation.index];
   if (it.kind === 'announcement') {
     box.innerHTML = `<div class="ann"><h2>${esc(it.item.title)}</h2><p>${esc(it.item.body)}</p></div>`;
+  } else if (it.kind === 'donation') {
+    const kind = it.item.kind === 'fundraising' ? 'Fundraising' : it.item.kind === 'payment' ? 'Payment' : 'Donation';
+    box.innerHTML = `<div class="ann don"><h2>${esc(it.item.title)}</h2>
+      <p class="pay">${esc(kind)}${it.item.method ? ' · ' + esc(it.item.method) : ''}</p>
+      <p class="num">${esc(it.item.account || '')}</p>
+      <p>${esc(it.item.note || '')}</p></div>`;
   } else {
     box.innerHTML = `<img src="${esc(mediaUrl(it.item.url))}" alt="" />${it.item.caption ? `<div class="cap">${esc(it.item.caption)}</div>` : ''}`;
   }
@@ -344,13 +350,30 @@ function updateAdhkar(days, now) {
   $('adhkar-count').textContent = adhkarState.index + 1 + ' / ' + win.set.items.length;
 }
 
+
+let welcomed = false;
+function playWelcome(then) {
+  if (welcomed) return then();
+  welcomed = true;
+  show('welcome');
+  $('welcome-logo').hidden = false;
+  $('welcome-credit').hidden = true;
+  setTimeout(() => {
+    $('welcome-logo').hidden = true;
+    $('welcome-credit').hidden = false;
+    setTimeout(then, 4500);
+  }, 3500);
+}
+
 // ---------- Boot ----------
 setInterval(tick, 1000);
 setInterval(poll, POLL_MS);
 window.addEventListener('online', poll);
-render(); // instant render from cache (works with no network)
-if (token) poll();
-else startPairing();
+playWelcome(() => {
+  render(); // instant render from cache (works with no network)
+  if (token) poll();
+  else startPairing();
+});
 
 if ('serviceWorker' in navigator && !API)
   navigator.serviceWorker.register('/tv/sw.js', { scope: '/tv/' }).catch(() => {});
