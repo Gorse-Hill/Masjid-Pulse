@@ -165,6 +165,35 @@ function hijri(date) {
   }
 }
 
+
+const ADHAN_BANNER_SEC = 60;
+function updateAdhanBanner(days, now) {
+  const box = $('adhan-banner');
+  if (!box) return;
+  let hit = null;
+  for (let i = 0; i < days.length; i++) {
+    const d = days[i];
+    const base = (Date.parse(d.date + 'T00:00:00Z') - Date.parse(now.date + 'T00:00:00Z')) / 1000;
+    const prayers = D.displayPrayersForDay(d, snapshot.jummah);
+    for (let j = 0; j < prayers.length; j++) {
+      const p = prayers[j];
+      const s = base + D.adhanAbsMinutes(p) * 60;
+      if (now.seconds >= s && now.seconds < s + ADHAN_BANNER_SEC) {
+        hit = p;
+        break;
+      }
+    }
+    if (hit) break;
+  }
+  if (!hit) {
+    box.hidden = true;
+    return;
+  }
+  $('adhan-name').textContent = hit.name;
+  $('adhan-time').textContent = hit.adhan;
+  box.hidden = false;
+}
+
 function tick() {
   if (!snapshot) return;
   const tz = snapshot.mosque.timezone;
@@ -253,6 +282,7 @@ function tick() {
 
   updateRotation(now.date);
   updateAdhkar(days, now);
+  updateAdhanBanner(days, now);
 
   const online = !lastFetchFailed && Date.now() - lastOk < OFFLINE_AFTER_MS;
   const conn = $('conn');
