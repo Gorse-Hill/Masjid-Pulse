@@ -361,8 +361,21 @@ function playWelcome(then) {
   setTimeout(() => {
     $('welcome-logo').hidden = true;
     $('welcome-credit').hidden = false;
-    setTimeout(then, 4500);
-  }, 3500);
+    setTimeout(then, 5000);
+  }, 3000);
+}
+
+const FLASH_EVERY_MS = 3 * 60 * 1000;
+const FLASH_FOR_MS = 5000;
+function startWaqafFlash() {
+  setInterval(() => {
+    const box = $('waqaf-flash');
+    const adhkar = $('adhkar');
+    if (!box || $('display').hidden) return;
+    if (adhkar && !adhkar.hidden) return;
+    box.hidden = false;
+    setTimeout(() => { box.hidden = true; }, FLASH_FOR_MS);
+  }, FLASH_EVERY_MS);
 }
 
 // ---------- Boot ----------
@@ -371,6 +384,7 @@ setInterval(poll, POLL_MS);
 window.addEventListener('online', poll);
 playWelcome(() => {
   render(); // instant render from cache (works with no network)
+  startWaqafFlash();
   if (token) poll();
   else startPairing();
 });
