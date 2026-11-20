@@ -112,6 +112,15 @@ export interface SnapshotSlide {
   durationSec: number;
 }
 
+export interface SnapshotDonation {
+  id: number;
+  title: string;
+  kind: 'donation' | 'fundraising' | 'payment';
+  method: string | null;
+  account: string | null;
+  note: string | null;
+}
+
 export interface DisplaySnapshot {
   version: number;
   publishedAt: string; // ISO
@@ -120,6 +129,8 @@ export interface DisplaySnapshot {
   jummah: SnapshotJummah[];
   announcements: SnapshotAnnouncement[];
   slides: SnapshotSlide[];
+  /** Optional so snapshots published before donations existed still render. */
+  donations?: SnapshotDonation[];
   source?: SnapshotSource;
 }
 
@@ -350,15 +361,19 @@ export function formatAge(fromIso: string, now: Date = new Date()): string {
   return `${d} day${d === 1 ? '' : 's'} ago`;
 }
 
-/** Combined rotation list for the TV: announcements active today, then slides. */
+/** Combined rotation list for the TV: announcements active today, donations, then slides. */
 export type RotationItem =
   | { kind: 'announcement'; item: SnapshotAnnouncement; durationSec: number }
+  | { kind: 'donation'; item: SnapshotDonation; durationSec: number }
   | { kind: 'slide'; item: SnapshotSlide; durationSec: number };
 
 export function buildRotation(snapshot: DisplaySnapshot, date: string): RotationItem[] {
   const items: RotationItem[] = [];
   for (const a of activeAnnouncements(snapshot.announcements, date)) {
     items.push({ kind: 'announcement', item: a, durationSec: 12 });
+  }
+  for (const d of snapshot.donations ?? []) {
+    items.push({ kind: 'donation', item: d, durationSec: 14 });
   }
   for (const s of snapshot.slides) {
     items.push({ kind: 'slide', item: s, durationSec: s.durationSec });
