@@ -381,16 +381,20 @@ function updateAdhkar(days, now) {
 }
 
 let welcomed = false;
-function playWelcome(then) {
-  if (welcomed) return then();
+function playWelcome() {
+  if (welcomed) return;
   welcomed = true;
-  show('welcome');
+  const box = $('welcome');
+  if (!box) return;
+  box.hidden = false;
   $('welcome-logo').hidden = false;
   $('welcome-credit').hidden = true;
   setTimeout(() => {
     $('welcome-logo').hidden = true;
     $('welcome-credit').hidden = false;
-    setTimeout(then, 5000);
+    setTimeout(() => {
+      box.hidden = true;
+    }, 5000);
   }, 3000);
 }
 
@@ -413,12 +417,11 @@ function startWaqafFlash() {
 setInterval(tick, 1000);
 setInterval(poll, POLL_MS);
 window.addEventListener('online', poll);
-playWelcome(() => {
-  render(); // instant render from cache (works with no network)
-  startWaqafFlash();
-  if (token) poll();
-  else startPairing();
-});
+render(); // instant render from cache (works with no network)
+startWaqafFlash();
+if (token) poll();
+else startPairing();
+playWelcome();
 
 if ('serviceWorker' in navigator && !API)
   navigator.serviceWorker.register('/tv/sw.js', { scope: '/tv/' }).catch(() => {});
