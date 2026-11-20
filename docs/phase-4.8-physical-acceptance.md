@@ -32,17 +32,17 @@ adb shell am start -n com.masjidpulse.tv/.MainActivity
 
 ## Register
 
-| #   | Test          | Action                      | Required evidence            | Result | Notes |
-| --- | ------------- | --------------------------- | ---------------------------- | ------ | ----- |
-| 01  | Installation  | Install release APK         | App installs and opens       |        |       |
-| 02  | First launch  | Enter production server URL | Pairing screen appears       |        |       |
-| 03  | Pairing       | Enter 5-digit code          | TV exits pairing             |        |       |
-| 04  | Publishing    | Publish to TVs              | Display updates within ~30 s |        |       |
-| 05  | Offline       | Disconnect Wi-Fi            | Last times remain visible    |        |       |
-| 06  | Cold boot     | Power cycle the TV          | App restores without network |        |       |
-| 07  | Next-day Fajr | Leave running across midnight | Correct next-day Fajr      |        |       |
-| 08  | Recovery      | Restore internet            | Updated snapshot received    |        |       |
-| 09  | Signature     | apksigner verify            | Signature valid              |        |       |
+| #   | Test          | Action                        | Required evidence            | Result | Notes |
+| --- | ------------- | ----------------------------- | ---------------------------- | ------ | ----- |
+| 01  | Installation  | Install release APK           | App installs and opens       |        |       |
+| 02  | First launch  | Enter production server URL   | Pairing screen appears       |        |       |
+| 03  | Pairing       | Enter 5-digit code            | TV exits pairing             |        |       |
+| 04  | Publishing    | Publish to TVs                | Display updates within ~30 s |        |       |
+| 05  | Offline       | Disconnect Wi-Fi              | Last times remain visible    |        |       |
+| 06  | Cold boot     | Power cycle the TV            | App restores without network |        |       |
+| 07  | Next-day Fajr | Leave running across midnight | Correct next-day Fajr        |        |       |
+| 08  | Recovery      | Restore internet              | Updated snapshot received    |        |       |
+| 09  | Signature     | apksigner verify              | Signature valid              |        |       |
 
 ## On failure
 
