@@ -49,6 +49,14 @@ const announcementBody = z
     path: ['endDate'],
   });
 
+const donationBody = z.object({
+  title: z.string().trim().min(1).max(120),
+  kind: z.enum(['donation', 'fundraising', 'payment']),
+  method: z.string().trim().max(40).nullable().optional(),
+  account: z.string().trim().max(80).nullable().optional(),
+  note: z.string().trim().max(400).nullable().optional(),
+});
+
 const ALLOWED_MIME: Record<string, string> = {
   'image/png': '.png',
   'image/jpeg': '.jpg',
@@ -321,6 +329,56 @@ export function contentRouter({ db, config }: Ctx): Router {
       userId: req.user!.id,
       action: 'announcement.delete',
       entityType: 'announcement',
+      entityId: String(req.params.id),
+    });
+    res.json({ ok: true });
+  });
+
+  // ---- Donations, fundraising, payment numbers ----
+  const donationSelect =
+    'SELECT id, title, kind, method, account, note, created_at AS createdAt FROM donations';
+  r.get('/donations', editor, (req, res) => {
+    res.json(
+      db.prepare(`${donationSelect} WHERE mosque_id = ? AND deleted_at IS NULL ORDER BY id`).all(req.mosqueId!),
+    );
+  });
+  r.post('/donations', editor, (req, res) => {
+    const b = donationBody.parse(req.body);
+    const info = db
+      .prepare(
+        'INSERT INTO donations (mosque_id, title, kind, method, account, note, created_by) VALUES (?, ?, ?, ?, ?, ?, ?)',
+      )
+      .run(
+        req.mosqueId!,
+        b.title,
+        b.kind,
+        b.method || null,
+        b.account || null,
+        b.note || null,
+        req.user!.id,
+      );
+    bumpRevision(db, req.mosqueId!);
+    logAudit(db, {
+      mosqueId: req.mosqueId!,
+      userId: req.user!.id,
+      action: 'donation.create',
+      entityType: 'donation',
+      entityId: Number(info.lastInsertRowid),
+      details: { title: b.title, kind: b.kind },
+    });
+    res.status(201).json(db.prepare(`${donationSelect} WHERE id = ?`).get(info.lastInsertRowid));
+  });
+  r.delete('/donations/:id', editor, (req, res) => {
+    const info = db
+      .prepare('UPDATE donations SET deleted_at = ? WHERE id = ? AND mosque_id = ? AND deleted_at IS NULL')
+      .run(config.now().toISOString(), intParam(req.params.id), req.mosqueId!);
+    if (!info.changes) throw notFound('Donation not found');
+    bumpRevision(db, req.mosqueId!);
+    logAudit(db, {
+      mosqueId: req.mosqueId!,
+      userId: req.user!.id,
+      action: 'donation.delete',
+      entityType: 'donation',
       entityId: String(req.params.id),
     });
     res.json({ ok: true });
