@@ -61,6 +61,12 @@ export function buildSnapshotPayload(
       )
       .all(mosqueId) as { id: number; filename: string; caption: string | null; durationSec: number }[]
   ).map((s) => ({ id: s.id, url: `/uploads/${s.filename}`, caption: s.caption, durationSec: s.durationSec }));
+  const donations = db
+    .prepare(
+      `SELECT id, title, kind, method, account, note FROM donations
+       WHERE mosque_id = ? AND deleted_at IS NULL ORDER BY id`,
+    )
+    .all(mosqueId) as NonNullable<DisplaySnapshot['donations']>;
   const calc = getCalcSettings(db, mosqueId);
   const overrides = overridesFrom(db, mosqueId, today);
   const source: SnapshotSource = calc
@@ -77,6 +83,7 @@ export function buildSnapshotPayload(
     jummah,
     announcements,
     slides,
+    donations,
   };
 }
 
