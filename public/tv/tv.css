@@ -362,3 +362,21 @@ table.prayers {
 .foot-credit { font-weight: 700; color: #d8ece8; }
 .rotation .don .pay { font-size: 2vw; color: #01534a; margin: 1vh 0 0; }
 .rotation .don .num { font-size: 4.2vw; font-weight: 800; color: #fd2d25; margin: 1.4vh 0; letter-spacing: 0.04em; }
+
+.waqaf-logo { height: 42vh; max-width: 78vw; object-fit: contain; background: #fff; }
+.waqaf-flash {
+  position: absolute;
+  left: 8vw;
+  right: 8vw;
+  top: 16vh;
+  bottom: 10vh;
+  background: #fefef7;
+  border-radius: 1.2vw;
+  border-top: 1.2vh solid #01534a;
+  border-bottom: 1.2vh solid #fd2d25;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2vh 2vw;
+}
+.waqaf-flash img { max-width: 100%; max-height: 100%; object-fit: contain; }
