@@ -380,3 +380,18 @@ table.prayers {
   padding: 2vh 2vw;
 }
 .waqaf-flash img { max-width: 100%; max-height: 100%; object-fit: contain; }
+
+.adhan-banner {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: #01534a;
+  color: #fff;
+  text-align: center;
+  padding: 12vh 4vw 0;
+}
+.adhan-kicker { font-size: 3vw; letter-spacing: 0.2em; text-transform: uppercase; }
+.adhan-name { font-size: 10vw; font-weight: 800; margin: 4vh 0 1vh; }
+.adhan-time { font-size: 5vw; font-weight: 700; color: #fefef7; }
