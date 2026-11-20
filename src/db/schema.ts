@@ -190,4 +190,20 @@ export const MIGRATIONS: string[] = [
   CREATE INDEX idx_email_tokens_user ON email_tokens(user_id, purpose);
   CREATE INDEX idx_email_tokens_mosque ON email_tokens(mosque_id, purpose);
   `,
+  `
+  -- Standing TV notices: donation collections, fundraising, and mosque payment numbers.
+  CREATE TABLE donations (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    mosque_id INTEGER NOT NULL REFERENCES mosques(id) ON DELETE CASCADE,
+    title TEXT NOT NULL,
+    kind TEXT NOT NULL CHECK (kind IN ('donation','fundraising','payment')),
+    method TEXT,
+    account TEXT,
+    note TEXT,
+    created_by INTEGER REFERENCES users(id),
+    created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now')),
+    deleted_at TEXT
+  );
+  CREATE INDEX idx_donations_mosque ON donations(mosque_id, id);
+  `,
 ];
