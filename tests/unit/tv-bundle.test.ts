@@ -29,6 +29,14 @@ describe('TV bundle (public/tv/app.js)', () => {
     expect(html).not.toMatch(/type="module"/);
   });
 
+  it('keeps the AG TECH developer and AHMED GORSE WAQAF donor credits visible', () => {
+    const html = readFileSync(path.join(PUBLIC, 'index.html'), 'utf8');
+    expect(html).toContain('Masjid Pulse is Designed &amp; Developed by AG TECH.');
+    expect(html).toContain('Masjid Pulse is Donated by AHMED GORSE WAQAF.');
+    expect(html).toContain('src="/brand/waqaf.jpg"');
+    expect(html).not.toContain('Designed by Ahmed Gorse');
+  });
+
   it('tv.css avoids CSS variables, flex/grid gap and grid (unsupported in Chromium 38-53)', () => {
     const css = readFileSync(path.join(PUBLIC, 'tv.css'), 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
     expect(css).not.toMatch(/var\(--/);
