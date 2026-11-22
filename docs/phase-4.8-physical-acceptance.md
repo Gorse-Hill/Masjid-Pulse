@@ -1,8 +1,8 @@
 # Phase 4.8 physical acceptance register
 
-CI is green on `main` (Node pipeline and Android TV emulator suite). That does
-not close Phase 4.8. This register is filled only after a real deployment and a
-physical Android TV, or the LG browser journey on a webOS TV.
+Automated CI results and their run links are recorded in `TEST-EVIDENCE.md`.
+Those checks do not close Phase 4.8. This register is filled only after a real
+deployment and a physical Android TV, or the LG browser journey on a webOS TV.
 
 Status: **0 / 9 - not started**
 
