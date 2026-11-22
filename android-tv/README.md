@@ -8,15 +8,15 @@ updates (`?api=<server>`). The last published snapshot and the device token live
 localStorage, so the display keeps running through internet outages and reboots, and computes prayer
 times for days beyond the published window from the snapshot's embedded calculation settings.
 
-| Feature                       | How                                                                                                                                                                                                                                                                  |
-| ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Android TV / Fire TV launcher | `LEANBACK_LAUNCHER` + `LAUNCHER` intent filters, 320×180 banner (`res/drawable-xhdpi/banner.png`, from the stacked logo), launcher icons from the TV emblem; `leanback`/`touchscreen` not required, so it also installs on Fire TV and other boxes                   |
-| minSdk 21                     | Android 5.0+ (older Fire TV sticks); targetSdk/compileSdk 34                                                                                                                                                                                                         |
-| Keep screen on                | `FLAG_KEEP_SCREEN_ON` (+ show when locked / turn screen on), immersive full-screen                                                                                                                                                                                   |
-| Auto-start on boot            | `BootReceiver` for `BOOT_COMPLETED`, `QUICKBOOT_POWERON` (Fire TV/some boxes), `MY_PACKAGE_REPLACED`                                                                                                                                                                 |
-| Restart on crash              | `MasjidPulseApp` uncaught-exception handler schedules a restart via `AlarmManager` (crash-loop guard: max 3 in 60 s); a crashed/killed WebView renderer (`onRenderProcessGone`) is rebuilt in place                                                                  |
-| Configurable server           | First launch asks for the server address (e.g. `https://pulse.example.org` or `http://192.168.1.20:3000`). Later: press **MENU**, **BACK** or hold **OK** for 1.5 s → change server / _Reset pairing_ / _Exit app_. Bake a default in with `-PmpServerUrl=https://…` |
-| Kiosk-ish                     | BACK does not leave the display; it opens the settings dialog                                                                                                                                                                                                        |
+| Feature                       | How                                                                                                                                                                                                                                                |
+| ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Android TV / Fire TV launcher | `LEANBACK_LAUNCHER` + `LAUNCHER` intent filters, 320×180 banner (`res/drawable-xhdpi/banner.png`, from the stacked logo), launcher icons from the TV emblem; `leanback`/`touchscreen` not required, so it also installs on Fire TV and other boxes |
+| minSdk 21                     | Android 5.0+ (older Fire TV sticks); targetSdk/compileSdk 34                                                                                                                                                                                       |
+| Keep screen on                | `FLAG_KEEP_SCREEN_ON` (+ show when locked / turn screen on), immersive full-screen                                                                                                                                                                 |
+| Auto-start on boot            | `BootReceiver` for `BOOT_COMPLETED`, `QUICKBOOT_POWERON` (Fire TV/some boxes), `MY_PACKAGE_REPLACED`                                                                                                                                               |
+| Restart on crash              | `MasjidPulseApp` uncaught-exception handler schedules a restart via `AlarmManager` (crash-loop guard: max 3 in 60 s); a crashed/killed WebView renderer (`onRenderProcessGone`) is rebuilt in place                                                |
+| Configurable server           | First launch asks for the server address (e.g. `https://pulse.example.org`). Later: press **MENU**, **BACK** or hold **OK** for 1.5 s → change server / _Reset pairing_ / _Exit app_. Bake a default in with `-PmpServerUrl=https://…`             |
+| Kiosk-ish                     | BACK does not leave the display; it opens the settings dialog                                                                                                                                                                                      |
 
 ## Build
 
@@ -61,8 +61,9 @@ or `adb shell appops set com.masjidpulse.tv SYSTEM_ALERT_WINDOW allow`. Android 
 devices auto-start without this.
 
 **Server requirements**: the TV page is loaded from the APK, so `/api/tv/*` sends CORS headers
-(already done by the server). Plain-HTTP LAN servers are allowed (`network_security_config.xml`) —
-prefer HTTPS over the internet.
+(already done by the server). Configured servers must use HTTPS. Cleartext is restricted to
+`localhost`, `127.0.0.1`, and the Android emulator's `10.0.2.2` host for local development;
+arbitrary private-LAN HTTP addresses are not exempted (`network_security_config.xml`).
 
 ## Limitations
 
