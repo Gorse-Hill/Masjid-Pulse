@@ -18,7 +18,7 @@ Surfaces (all served by one Node.js process):
 
 ## Quick start
 
-Requires **Node.js 20+** (tested on 20.19). No paid services; SQLite file database.
+Requires **Node.js 22.18.x, or 24.11.0 and newer** (tested on 22.18.0), matching the Babel 8 build toolchain. No paid services; SQLite file database.
 
 ```bash
 npm install
@@ -81,9 +81,10 @@ npm run test:coverage  # with V8 coverage (server-side src/ only)
 BASE=http://localhost:3000 npm run smoke   # curl smoke test of the main journey against a running server
 ```
 
-CI: `.github/workflows/ci.yml` runs format, lint, typecheck, build, tests with coverage, the curl smoke
-test and `npm audit` on Node 20 and 22. (The workflow file is included; it has not been run on GitHub
-from this machine.)
+CI: `.github/workflows/ci.yml` uses Node 22.18.0 to run format, lint, typecheck, build, tests with
+coverage, the curl smoke test, and a blocking production dependency audit. A separate job builds and
+tests the Android TV app, runs its emulator suite, and records the debug APK's SHA-256 checksum.
+Current local and GitHub Actions evidence is recorded in `TEST-EVIDENCE.md`.
 
 `scripts/browser-e2e.mjs` is an optional headless-Chrome walkthrough (pair TV in a browser, admin
 screens, offline reload of the TV). It is not part of `npm test`; it was used to capture

@@ -6,7 +6,7 @@
 #     -e APP_URL=http://localhost:8080 masjid-pulse
 
 # ---- build: compile TS, bundle the ES5 TV app, then drop dev dependencies ----
-FROM node:20-bookworm-slim AS build
+FROM node:22.18.0-bookworm-slim AS build
 WORKDIR /app
 # Toolchain only used if better-sqlite3 has no prebuilt binary for this platform.
 RUN apt-get update && apt-get install -y --no-install-recommends python3 make g++ \
@@ -20,7 +20,7 @@ COPY public ./public
 RUN npm run build && npm prune --omit=dev
 
 # ---- runtime ----
-FROM node:20-bookworm-slim
+FROM node:22.18.0-bookworm-slim
 ENV NODE_ENV=production \
     PORT=8080 \
     DATABASE_FILE=/data/masjid-pulse.db \

@@ -63,6 +63,7 @@ let paused = !!store.get(KEY.paused);
 let lastFetchFailed = false;
 let rotation = { items: [], index: -1, timer: null, sig: '' };
 let adhkarState = { key: '', index: 0, nextAt: 0 };
+let prayerAlertActive = false;
 
 function show(id) {
   for (const s of ['welcome', 'pairing', 'waiting', 'display']) $(s).hidden = s !== id;
@@ -186,11 +187,12 @@ function updateAdhanBanner(days, now) {
   }
   if (!hit) {
     box.hidden = true;
-    return;
+    return null;
   }
   $('adhan-name').textContent = hit.name;
   $('adhan-time').textContent = hit.adhan;
   box.hidden = false;
+  return hit;
 }
 
 function tick() {
@@ -281,7 +283,13 @@ function tick() {
 
   updateRotation(now.date);
   updateAdhkar(days, now);
-  updateAdhanBanner(days, now);
+  const adhan = updateAdhanBanner(days, now);
+  prayerAlertActive = Boolean(inPrayer || (next && next.type === 'iqamah') || adhan);
+  if (prayerAlertActive) {
+    // A flash already on screen must not cover an Athan/Iqamah alert that has just started.
+    const waqaf = $('waqaf-flash');
+    if (waqaf) waqaf.hidden = true;
+  }
 
   const online = !lastFetchFailed && Date.now() - lastOk < OFFLINE_AFTER_MS;
   const conn = $('conn');
@@ -405,7 +413,7 @@ function startWaqafFlash() {
     const box = $('waqaf-flash');
     const adhkar = $('adhkar');
     if (!box || $('display').hidden) return;
-    if (adhkar && !adhkar.hidden) return;
+    if ((adhkar && !adhkar.hidden) || prayerAlertActive) return;
     box.hidden = false;
     setTimeout(() => {
       box.hidden = true;
