@@ -100,4 +100,91 @@ describe('TV bundle (public/tv/app.js)', () => {
     expect(xhrSent[0]).toContain('/api/tv/snapshot?version=');
     expect(vm.runInContext('typeof fetch', ctx)).toBe('function');
   });
+
+  it('keeps the Waqaf flash hidden throughout Athan and Iqamah alerts', () => {
+    let currentMs = Date.parse('2026-11-22T05:14:00+03:00');
+    const MockDate = class extends Date {
+      constructor(value?: string | number) {
+        super(value === undefined ? currentMs : value);
+      }
+      static now() {
+        return currentMs;
+      }
+    };
+    const db = openDatabase(':memory:');
+    const { mosqueId } = seed(db, 'Africa/Mogadishu', new Date(currentMs));
+    const snapshot = displaySnapshotFor(db, mosqueId)!.snapshot;
+    const elements: Record<
+      string,
+      { textContent: string; innerHTML: string; className: string; hidden: boolean }
+    > = {};
+    const el = (id: string) =>
+      (elements[id] ??= { textContent: '', innerHTML: '', className: '', hidden: false });
+    el('waqaf-flash').hidden = true;
+    const intervals: Record<number, () => void> = {};
+    const storage: Record<string, string> = {
+      mp_tv_token: JSON.stringify('device-token'),
+      mp_tv_snapshot: JSON.stringify(snapshot),
+    };
+    const sandbox: Record<string, unknown> = {
+      Date: MockDate,
+      document: { getElementById: el },
+      location: { search: '', href: 'http://tv.local/tv/' },
+      navigator: {},
+      localStorage: {
+        getItem: (k: string) => (k in storage ? storage[k] : null),
+        setItem: (k: string, v: string) => void (storage[k] = String(v)),
+        removeItem: (k: string) => void delete storage[k],
+      },
+      XMLHttpRequest: class {
+        open() {}
+        setRequestHeader() {}
+        send() {}
+        getAllResponseHeaders() {
+          return '';
+        }
+      },
+      setTimeout: () => 0,
+      clearTimeout: () => {},
+      setInterval: (fn: () => void, ms: number) => {
+        intervals[ms] = fn;
+        return 1;
+      },
+      addEventListener: () => {},
+      console,
+    };
+    sandbox.window = sandbox;
+    sandbox.self = sandbox;
+    vm.runInContext(bundle, vm.createContext(sandbox), { filename: 'app.js' });
+
+    const tick = intervals[1000];
+    const flash = intervals[3 * 60 * 1000];
+    flash();
+    expect(el('waqaf-flash').hidden).toBe(false);
+
+    currentMs = Date.parse('2026-11-22T05:15:00+03:00');
+    tick();
+    expect(el('adhan-banner').hidden).toBe(false);
+    expect(el('waqaf-flash').hidden).toBe(true);
+    flash();
+    expect(el('waqaf-flash').hidden).toBe(true);
+
+    currentMs = Date.parse('2026-11-22T05:16:00+03:00');
+    tick();
+    expect(el('next').className).toContain('iqamah');
+    flash();
+    expect(el('waqaf-flash').hidden).toBe(true);
+
+    currentMs = Date.parse('2026-11-22T05:46:00+03:00');
+    tick();
+    expect(el('next').className).toContain('inprayer');
+    flash();
+    expect(el('waqaf-flash').hidden).toBe(true);
+
+    currentMs = Date.parse('2026-11-22T06:30:00+03:00');
+    tick();
+    flash();
+    expect(el('waqaf-flash').hidden).toBe(false);
+    db.close();
+  });
 });
