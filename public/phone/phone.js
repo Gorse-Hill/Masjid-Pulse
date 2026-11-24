@@ -39,19 +39,46 @@ function beep() {
   if (!prefs.sound) return;
   try {
     const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    const o = ctx.createOscillator();
-    const g = ctx.createGain();
-    o.type = 'sine';
-    o.frequency.value = 784;
-    g.gain.setValueAtTime(0.2, ctx.currentTime);
-    g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.2);
-    o.connect(g);
-    g.connect(ctx.destination);
-    o.start();
-    o.stop(ctx.currentTime + 1.2);
+    [784, 988, 784].forEach((freq, i) => {
+      const o = ctx.createOscillator();
+      const g = ctx.createGain();
+      const t = ctx.currentTime + i * 0.45;
+      o.type = 'sine';
+      o.frequency.value = freq;
+      g.gain.setValueAtTime(0.22, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.4);
+      o.connect(g);
+      g.connect(ctx.destination);
+      o.start(t);
+      o.stop(t + 0.4);
+    });
   } catch {
     /* sound is optional */
   }
+}
+
+const DHIKR = [
+  { ar: 'سُبْحَانَ اللهِ', en: 'Subhanallah', n: 33 },
+  { ar: 'الْحَمْدُ لِلَّهِ', en: 'Alhamdulillah', n: 33 },
+  { ar: 'اللهُ أَكْبَرُ', en: 'Allahu Akbar', n: 33 },
+  { ar: 'لَا إِلَهَ إِلَّا اللهُ', en: 'La ilaha illallah', n: 1 },
+];
+let dhikrStep = 0;
+let dhikrCount = 0;
+function renderDhikr() {
+  const item = DHIKR[dhikrStep];
+  $('dhikr-ar').textContent = item.ar;
+  $('dhikr-en').textContent = item.en;
+  $('dhikr-count').textContent = dhikrCount + ' / ' + item.n;
+}
+function bumpDhikr(delta) {
+  const item = DHIKR[dhikrStep];
+  dhikrCount = Math.max(0, dhikrCount + delta);
+  if (dhikrCount >= item.n) {
+    dhikrStep = (dhikrStep + 1) % DHIKR.length;
+    dhikrCount = 0;
+  }
+  renderDhikr();
 }
 
 async function loadTimes() {
@@ -177,3 +204,12 @@ locate().catch(() => {
   $('place').textContent = 'Could not load times. Check the connection and reload.';
 });
 setInterval(render, 1000);
+
+$('dhikr-plus').addEventListener('click', () => bumpDhikr(1));
+$('dhikr-minus').addEventListener('click', () => bumpDhikr(-1));
+$('dhikr-reset').addEventListener('click', () => {
+  dhikrStep = 0;
+  dhikrCount = 0;
+  renderDhikr();
+});
+renderDhikr();
