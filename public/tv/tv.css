@@ -313,18 +313,19 @@ table.prayers {
   right: 2.5vw;
   top: 14vh;
   bottom: 6vh;
-  background: #01534a;
-  color: #fefef7;
+  background: #0b1f3a;
+  color: #f7f3ea;
   border-radius: 1.2vw;
-  border-top: 1.2vh solid #fd2d25;
+  border-top: 1.2vh solid #c4a35a;
   text-align: center;
   padding: 3vh 4vw;
   overflow: hidden;
 }
 .adhkar-kicker {
-  font-size: 2.2vw;
+  font-size: 2vw;
   font-weight: 800;
-  color: #ff8a83;
+  color: #c4a35a;
+  letter-spacing: 0.04em;
 }
 .adhkar-so-title {
   font-size: 1.6vw;
@@ -332,11 +333,12 @@ table.prayers {
   margin-top: 0.6vh;
 }
 .adhkar-ar {
-  font-size: 3.2vw;
-  line-height: 1.55;
-  margin-top: 3vh;
+  font-size: 2.6vw;
+  line-height: 1.7;
+  margin-top: 2.4vh;
   direction: rtl;
   font-family: 'Noto Naskh Arabic', 'Traditional Arabic', 'Scheherazade New', serif;
+  color: #ffffff;
 }
 .adhkar-so {
   font-size: 1.7vw;
