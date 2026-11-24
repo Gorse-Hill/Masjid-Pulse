@@ -32,32 +32,65 @@ const POST: AdhkarSet = {
   titleSo: 'Digriga Salaadda Kadib',
   items: [
     {
-      arabic: 'أَسْتَغْفِرُ اللَّهَ',
+      arabic: 'أَسْتَغْفِرُ اللهَ',
       somali: 'Waxaan dembi dhaaf weydiisanayaa Alle.',
       note: '3 jeer · 3 times',
     },
     {
-      arabic:
-        'اللَّهُمَّ أَنْتَ السَّلاَمُ وَمِنْكَ السَّلاَمُ، تَبَارَكْتَ يَا ذَا الْجَلاَلِ وَالْإِكْرَامِ',
+      arabic: 'اللَّهُمَّ أَنْتَ السَّلَامُ وَمِنْكَ السَّلَامُ، تَبَارَكْتَ يَا ذَا الْجَلَالِ وَالْإِكْرَامِ',
       somali:
         'Allahayow adiga ayaa ah Nabad, nabaduna adiga ayay kaa timaaddaa; waad barako badantahay Allow leh weynida iyo sharafta.',
     },
     {
-      arabic: 'سُبْحَانَ اللَّهِ · الْحَمْدُ لِلَّهِ · اللَّهُ أَكْبَرُ',
-      somali: 'Alle ayaa ka nasahan nusqaan, Mahad oo dhan Alle ayaa leh, Alle ayaa ugu weyn.',
-      note: '33 jeer mid kasta · 33 times each',
-    },
-    {
       arabic:
-        'لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ',
+        'لَا إِلَهَ إِلَّا اللهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ، اللَّهُمَّ لَا مَانِعَ لِمَا أَعْطَيْتَ، وَلَا مُعْطِيَ لِمَا مَنَعْتَ، وَلَا يَنْفَعُ ذَا الْجَدِّ مِنْكَ الْجَدُّ',
       somali:
-        'Ma jiro ilaah xaq lagu caabudo Alle mooyee, kaligiis ayaa jira oo cid la wadaagtaa ma jirto; isaga ayaa leh boqortooyada, mahad oo dhanna isaga ayaa leh, wax walbana wuu awoodaa.',
+        'Ma jiro ilaah xaq lagu caabudo Alle mooyee, kaligiis. Allahayow waxa aad bixisay cid diidda ma jirto, waxa aad diidday cid bixisa ma jirto.',
+    },
+    {
+      arabic: 'سُبْحَانَ اللهِ',
+      somali: 'Alle ayaa ka nasahan nusqaan.',
+      note: '33 jeer · 33 times',
+    },
+    {
+      arabic: 'الْحَمْدُ لِلَّهِ',
+      somali: 'Mahad oo dhan Alle ayaa leh.',
+      note: '33 jeer · 33 times',
+    },
+    {
+      arabic: 'اللهُ أَكْبَرُ',
+      somali: 'Alle ayaa ugu weyn.',
+      note: '33 jeer · 33 times',
     },
     {
       arabic:
-        'اللَّهُ لَا إِلَهَ إِلاَّ هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ ۚ لَّهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۗ مَن ذَا الَّذِي يَشْفَعُ عِندَهُ إِلاَّ بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَيْءٍ مِّنْ عِلْمِهِ إِلاَّ بِمَا شَاءَ ۚ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ ۖ وَلَا يَئُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ',
+        'لَا إِلَهَ إِلَّا اللهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ',
+      somali:
+        'Ma jiro ilaah xaq lagu caabudo Alle mooyee, kaligiis ayaa jira; isaga ayaa leh boqortooyada, mahad oo dhanna isaga ayaa leh, wax walbana wuu awoodaa.',
+      note: '1 jeer · once, to complete the 33',
+    },
+    {
+      arabic:
+        'اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ ۚ لَّهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۗ مَن ذَا الَّذِي يَشْفَعُ عِندَهُ إِلَّا بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَيْءٍ مِّنْ عِلْمِهِ إِلَّا بِمَا شَاءَ ۚ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ ۖ وَلَا يَئُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ',
       somali: 'Akhri Aayadda Kursiga oo dhammaystiran salaad kasta kadib.',
-      note: 'Ayat al-Kursi · Quran 2:255',
+      note: 'Ayat al-Kursi · 1 jeer · once',
+    },
+    {
+      arabic: 'قُلْ هُوَ اللَّهُ أَحَدٌ ۝ اللَّهُ الصَّمَدُ ۝ لَمْ يَلِدْ وَلَمْ يُولَدْ ۝ وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ',
+      somali: 'Akhri Suuradda Al-Ikhlaas.',
+      note: 'Al-Ikhlas · 1 jeer, 3 jeer Fajr iyo Maghrib kadib',
+    },
+    {
+      arabic:
+        'قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ ۝ مِن شَرِّ مَا خَلَقَ ۝ وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ ۝ وَمِن شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ ۝ وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ',
+      somali: 'Akhri Suuradda Al-Falaq.',
+      note: 'Al-Falaq · 1 jeer, 3 jeer Fajr iyo Maghrib kadib',
+    },
+    {
+      arabic:
+        'قُلْ أَعُوذُ بِرَبِّ النَّاسِ ۝ مَلِكِ النَّاسِ ۝ إِلَٰهِ النَّاسِ ۝ مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ ۝ الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ ۝ مِنَ الْجِنَّةِ وَالنَّاسِ',
+      somali: 'Akhri Suuradda An-Naas.',
+      note: 'An-Nas · 1 jeer, 3 jeer Fajr iyo Maghrib kadib',
     },
   ],
 };
