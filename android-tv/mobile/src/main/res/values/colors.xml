@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="pulse_green">#01534A</color>
+    <color name="pulse_green_tint">#DCEBE8</color>
+    <color name="pulse_red">#D61F18</color>
+    <color name="pulse_ink">#161D20</color>
+    <color name="pulse_muted">#5E6763</color>
+    <color name="pulse_offwhite">#FEFEF7</color>
+    <color name="pulse_line">#E4DFCC</color>
+    <color name="white">#FFFFFF</color>
+</resources>

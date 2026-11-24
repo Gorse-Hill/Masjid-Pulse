@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">Masjid Pulse Salat Alert</string>
+    <string name="app_title">Salat Alert</string>
+    <string name="app_subtitle">Private, on-device prayer alerts</string>
+    <string name="next_prayer">Next prayer</string>
+    <string name="not_configured">Choose a location and save your preferences to schedule alerts.</string>
+    <string name="location_heading">Location &amp; calculation</string>
+    <string name="location_help">Use GPS or search for a city. You can also enter coordinates and an IANA timezone manually.</string>
+    <string name="city">City (optional)</string>
+    <string name="find_city">Find city</string>
+    <string name="use_location">Use my location</string>
+    <string name="latitude">Latitude</string>
+    <string name="longitude">Longitude</string>
+    <string name="timezone">Timezone (for example Africa/Mogadishu)</string>
+    <string name="calculation_method">Calculation method</string>
+    <string name="asr_method">Asr calculation</string>
+    <string name="high_latitude">High-latitude rule</string>
+    <string name="alerts_heading">Prayer alerts</string>
+    <string name="alerts_help">Enable each prayer and choose a silent alert, the system notification sound, or your own Adhan recording.</string>
+    <string name="adhan_audio">Adhan audio</string>
+    <string name="no_adhan_selected">No Adhan file selected. Adhan mode falls back to the standard notification sound.</string>
+    <string name="select_adhan">Choose Adhan audio</string>
+    <string name="permissions_heading">Alert reliability</string>
+    <string name="allow_notifications">Allow notifications</string>
+    <string name="allow_exact_alarms">Allow exact alarms</string>
+    <string name="save_alerts">Save &amp; schedule alerts</string>
+    <string name="test_alert">Send a test alert</string>
+    <string name="today_heading">Today’s prayer times</string>
+    <string name="offline_note">Once saved, prayer times and alerts are generated on this phone for 35 days. No internet connection or Masjid Pulse account is needed. Android battery policies can still affect delivery if permissions are denied.</string>
+    <string name="credits">Masjid Pulse is Designed &amp; Developed by AG TECH.\nMasjid Pulse is Donated by AHMED GORSE WAQAF.</string>
+    <string name="channel_silent">Silent prayer alerts</string>
+    <string name="channel_sound">Prayer alerts with sound</string>
+    <string name="channel_adhan">Adhan playback</string>
+    <string name="stop_adhan">Stop Adhan</string>
+    <string name="alert_style">Alert style</string>
+    <string name="city_example" translatable="false">Mogadishu</string>
+    <string name="latitude_example" translatable="false">2.0469</string>
+    <string name="longitude_example" translatable="false">45.3182</string>
+    <string name="timezone_example" translatable="false">Africa/Mogadishu</string>
+    <string name="coordinate_value" translatable="false">%1$.5f</string>
+    <!-- HH:mm:ss countdown fields are clock components, not plural counts. -->
+    <string name="next_prayer_countdown" tools:ignore="PluralsCandidate">%1$s at %2$s\n%3$02d:%4$02d:%5$02d remaining</string>
+    <string name="selected_adhan">Selected: %1$s</string>
+</resources>

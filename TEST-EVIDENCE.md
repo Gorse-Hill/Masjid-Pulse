@@ -48,6 +48,26 @@ No new GitHub run URL or APK checksum is claimed in the initial hardening commit
 added only from the observed pull-request run. A local Android build was not used as evidence because
 this environment has no Android SDK.
 
+## Native Salat Alert phone app
+
+- **Captured:** 2026-11-25
+- **Environment:** JDK 17.0.20, Gradle 8.7 (manually downloaded after the wrapper's distribution request
+  timed out), Android SDK platform/build-tools 34, Linux x64
+- **Command:** `gradle --no-daemon :mobile:clean :mobile:testDebugUnitTest :mobile:lintDebug
+  :mobile:assembleDebug` from `android-tv/`
+- **Observed result:** exit 0; 7 JVM tests passed with 0 failures/errors/skips; Android lint reported
+  0 issues; `mobile/build/outputs/apk/debug/mobile-debug.apk` was generated.
+- **Observed debug APK SHA-256:**
+  `ca82cb842a7e03273d35436627039825e9d13466512a538768225e3fa5be843a`
+- **Packaged manifest inspection:** `aapt dump badging` confirmed application ID
+  `com.masjidpulse.salat`, version `0.1.0` (version code 1), minSdk 26, targetSdk/compileSdk 34, and the
+  launcher activity.
+
+These are local build results for the Salat Alert working tree, not a GitHub Actions run or a signed
+release. No emulator or physical phone was available. Cold start, GPS and city lookup, notification and
+exact-alarm prompts, custom-Adhan playback, offline reopen, and reboot/rescheduling therefore remain
+runtime acceptance checks rather than claimed results.
+
 ## Physical acceptance
 
 No physical Android TV, LG webOS TV, signed release installation, or production SMTP delivery was

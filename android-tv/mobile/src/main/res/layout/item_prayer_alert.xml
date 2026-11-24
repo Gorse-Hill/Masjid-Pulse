@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp">
+
+    <CheckBox
+        android:id="@+id/prayer_enabled"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:buttonTint="@color/pulse_green"
+        android:textColor="@color/pulse_ink"
+        android:textSize="17sp"
+        android:textStyle="bold" />
+
+    <Spinner
+        android:id="@+id/prayer_mode"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:contentDescription="@string/alert_style" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/pulse_line" />
+</LinearLayout>

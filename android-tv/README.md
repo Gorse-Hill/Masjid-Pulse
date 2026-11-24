@@ -1,4 +1,53 @@
-# Masjid Pulse — Android TV app
+# Masjid Pulse — Android apps
+
+## Native Salat Alert phone app (`mobile/`)
+
+A standalone Android 8.0+ phone app (`com.masjidpulse.salat`) calculates prayer times on the device and
+delivers a separate silent notification, system-sound notification, or user-selected Adhan recording
+for each of Fajr, Dhuhr, Asr, Maghrib, and Isha. It does not require a Masjid Pulse account or server.
+
+### Build and install
+
+Requirements are the same as for the TV app: JDK 17, Android SDK platform/build-tools 34, and the
+included Gradle wrapper. From `android-tv/`:
+
+```bash
+./gradlew :mobile:testDebugUnitTest :mobile:lintDebug :mobile:assembleDebug
+adb install -r mobile/build/outputs/apk/debug/mobile-debug.apk
+```
+
+The debug APK uses Android's debug signing. Mobile release signing and store publishing are not
+configured by this module; do not add keystores or passwords to the repository.
+
+### Setup and operation
+
+1. Choose **Use my location**, **Find city**, or enter latitude/longitude manually. Verify the IANA
+   timezone (for example `Africa/Mogadishu`) before saving. GPS fills the phone's current timezone;
+   city/coordinate entry does not infer it. City lookup uses Android's system Geocoder, so availability
+   and network behavior depend on the device provider.
+2. Select a trusted calculation method, Asr madhab, and high-latitude rule. Calculation uses Batoul
+   Apps Adhan 1.2.1 and does not need a network connection.
+3. Enable each prayer independently and select **Silent notification**, **Notification sound**, or
+   **Play selected Adhan**. Select an audio file through Android's document picker before using Adhan
+   mode. No Adhan recording is bundled; choose a recording you are permitted to use. Without a readable
+   selected file, the app falls back to the standard notification sound.
+4. Allow notifications. On Android 12+, also allow **Alarms & reminders** for exact timing. If exact
+   alarms are denied, the app explicitly uses approximate alarms instead, which Android may delay.
+5. Tap **Save & schedule alerts**. **Send a test alert** uses the first enabled prayer and reports
+   blocked notifications instead of claiming that an invisible notification was sent.
+
+The rolling 35-day timetable and alarms are generated and stored locally. The schedule refreshes when
+the app opens, after an alert, after reboot or app replacement, and after time, timezone, or exact-alarm
+permission changes. Alert delivery does not require internet access. Android/OEM battery restrictions,
+force-stop, disabled notification channels, revoked permissions, and approximate-alarm fallback can
+still affect delivery; check the on-screen status and test the chosen alert style on the actual phone.
+
+Settings, coordinates, alert preferences, and the selected document URI are stored only in private app
+preferences. Android cloud backup is disabled for this module. The app has no analytics, account,
+location-history service, or Masjid Pulse server dependency. Optional Qibla, widgets, prayer tracking,
+nearby mosques, and community features are not part of this module.
+
+## Android TV app (`app/`)
 
 A small Kotlin shell (no Leanback library needed) that shows the Masjid Pulse TV display full-screen.
 The TV web app (`public/tv` + brand assets) is **bundled in the APK** and served from
@@ -70,3 +119,27 @@ arbitrary private-LAN HTTP addresses are not exempted (`network_security_config.
 - Slide images are fetched from the server; WebView's HTTP cache usually keeps them, but there is no
   service worker inside the app (the bundled page already provides offline start-up).
 - Not published to Google Play / Amazon Appstore; sideload only.
+
+## Third-party notice — Batoul Apps Adhan
+
+The `mobile/` module includes `com.batoulapps.adhan:adhan:1.2.1`, a pure-Java prayer-time calculation
+library licensed under the MIT License. No Adhan audio, dataset, or font is bundled with the module.
+
+MIT License
+
+Copyright © 2016 Batoul Apps
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+associated documentation files (the "Software"), to deal in the Software without restriction,
+including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
+and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial
+portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT
+LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
