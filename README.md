@@ -7,7 +7,7 @@ finance, education or community features.
 
 > Install after Maghrib, connect before Isha, trust it before Fajr.
 
-Surfaces (all served by one Node.js process):
+Server surfaces (all served by one Node.js process), plus native Android apps:
 
 | Surface                        | URL        | What it is                                                                                  |
 | ------------------------------ | ---------- | ------------------------------------------------------------------------------------------- |
@@ -15,6 +15,7 @@ Surfaces (all served by one Node.js process):
 | Web Admin + Mobile Admin (PWA) | `/admin/`  | Responsive SPA, installable (manifest + service worker)                                     |
 | TV Display                     | `/tv/`     | Full-screen display for the prayer hall; also packaged as an Android TV app (`android-tv/`) |
 | API                            | `/api/...` | REST/JSON, health at `/api/health`                                                          |
+| Native phone app               | —          | Private, on-device Salat alerts for Android 8+ (`android-tv/mobile/`); see `android-tv/README.md` |
 
 ## Quick start
 
@@ -116,7 +117,8 @@ public/
   brand/, icons/         logo, emblem, PWA icons, Android TV banner (generated from the logo)
 assets/brand/            original logo files (primary + alternates)
 tests/unit, tests/api    Vitest suites
-android-tv/              Android TV app (Kotlin, bundled TV web app, Gradle wrapper) — see its README
+android-tv/              Android TV app (`app/`) and native Salat Alert phone app (`mobile/`), Kotlin,
+                         shared Gradle wrapper — see its README
 ```
 
 ### Domain rules implemented
@@ -161,8 +163,8 @@ android-tv/              Android TV app (Kotlin, bundled TV web app, Gradle wrap
 - **Pairing**: TV gets a random 5-digit code (unique among live codes) + a secret; 10-minute expiry;
   one-time use; the device token is delivered once to the TV (then wiped) and stored only as SHA-256.
   Revoking a device makes the TV forget its token and cache and return to pairing.
-- **Announcements** auto-expire: excluded from new snapshots after `endDate` (mosque-local date), and
-  the TV filters by date again while offline.
+- **Announcements** auto-expire: excluded from new snapshots after `endDate`, and the TV filters by
+  date again while offline.
 - **Audit log** is append-only, enforced by DB triggers that abort UPDATE/DELETE.
 - **TV offline**: snapshot cached in `localStorage`; app shell + slide images cached by a service
   worker; status bar shows Online/Offline and "Last updated … · vN". Polls every 30 s with
