@@ -138,3 +138,27 @@ button {
 }
 #dhikr-count { font-size: 1.3rem; font-variant-numeric: tabular-nums; min-width: 80px; }
 .ghost { width: auto; padding: 10px 16px; margin-top: 10px; font-size: 1rem; }
+
+.quran {
+  background: #fff;
+  border-radius: 14px;
+  padding: 14px;
+  margin-bottom: 16px;
+}
+.quran .kicker { margin: 0; color: #01534a; font-weight: 800; }
+.quran-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.quran-tabs button {
+  width: auto;
+  background: #f4eedc;
+  color: #01534a;
+  padding: 8px 12px;
+  font-size: 0.95rem;
+}
+.quran-tabs button.on { background: #01534a; color: #fff; }
+.quran h3 { margin: 12px 0 6px; }
+.quran-ar {
+  direction: rtl;
+  font-size: 1.35rem;
+  line-height: 2;
+  font-family: 'Noto Naskh Arabic', 'Traditional Arabic', serif;
+}
