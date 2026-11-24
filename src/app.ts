@@ -10,6 +10,7 @@ import { contentRouter } from './routes/content.js';
 import { manageRouter } from './routes/manage.js';
 import { tvRouter } from './routes/tv.js';
 import { prayerSettingsRouter } from './routes/prayerSettings.js';
+import { prayerTimesRouter } from './routes/prayerTimes.js';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 // Works from both src/ (tsx, tests) and dist/ (compiled).
@@ -61,6 +62,7 @@ export function createApp(db: DB, configOverrides: Partial<AppConfig> = {}) {
   }
 
   app.use('/api', authRouter(ctx));
+  app.use('/api', prayerTimesRouter());
   // The Android TV app loads the TV page from its bundled assets (a different origin), so the
   // device API allows cross-origin calls. It uses header tokens only (no cookies).
   app.use('/api/tv', (req, res, next) => {
@@ -84,6 +86,7 @@ export function createApp(db: DB, configOverrides: Partial<AppConfig> = {}) {
   app.use(express.static(PUBLIC_DIR, { extensions: ['html'] }));
   app.get(['/admin', '/admin/'], (_req, res) => res.sendFile(path.join(PUBLIC_DIR, 'admin', 'index.html')));
   app.get(['/tv', '/tv/'], (_req, res) => res.sendFile(path.join(PUBLIC_DIR, 'tv', 'index.html')));
+  app.get(['/phone', '/phone/'], (_req, res) => res.sendFile(path.join(PUBLIC_DIR, 'phone', 'index.html')));
 
   app.use(errorHandler);
   return app;
