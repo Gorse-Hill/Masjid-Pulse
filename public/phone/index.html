@@ -28,15 +28,32 @@
       <p id="alert-text">Adhan</p>
     </section>
     <ul id="prayers"></ul>
+    <section class="qibla">
+      <div>
+        <p class="kicker">Qibla</p>
+        <strong id="qibla-deg">—</strong>
+        <p id="qibla-text">Hold the phone flat and turn until the arrow points up.</p>
+      </div>
+      <div id="qibla-dial" class="dial" aria-hidden="true">▲</div>
+    </section>
     <section class="controls">
       <label>Alert <input id="before" type="number" min="0" max="60" value="10" /> minutes before</label>
       <label class="check"><input id="sound" type="checkbox" checked /> Play a sound when the page is open</label>
       <button id="enable" type="button">Allow alerts</button>
       <p id="status">Alerts are off until you allow them.</p>
     </section>
+    <section class="howto">
+      <h2>Put it on your iPhone</h2>
+      <ol>
+        <li>Stay in Safari.</li>
+        <li>Tap the Share icon at the bottom. It is a square with an arrow up.</li>
+        <li>Scroll the menu and tap Add to Home Screen.</li>
+        <li>Tap Add. Open the new Salat icon, then tap Allow alerts.</li>
+      </ol>
+    </section>
     <p class="note">
-      Times follow the Muslim World League method for your location. A full adhan on a locked iPhone needs a
-      store app. This page alerts while it is open, and sends a notification when the phone allows it.
+      Times follow the Muslim World League method. The sound plays while this page is open. A full adhan on a
+      locked iPhone needs a store app.
     </p>
     <script src="/phone/phone.js"></script>
   </body>
