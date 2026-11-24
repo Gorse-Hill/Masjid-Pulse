@@ -13,5 +13,6 @@ dependencyResolutionManagement {
         maven { url = uri("https://maven.google.com") }
     }
 }
-rootProject.name = "MasjidPulseTV"
+rootProject.name = "MasjidPulse"
 include(":app")
+include(":mobile")
