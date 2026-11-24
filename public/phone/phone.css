@@ -108,3 +108,33 @@ button {
 }
 .howto h2 { margin: 0 0 8px 32px; color: #01534a; font-size: 1.1rem; }
 .howto li { margin: 8px 0; }
+
+.dhikr {
+  background: #0b1f3a;
+  color: #f7f3ea;
+  border-radius: 14px;
+  padding: 16px;
+  text-align: center;
+  margin-bottom: 16px;
+}
+.dhikr .kicker { margin: 0; color: #c4a35a; font-weight: 800; }
+.dhikr strong { display: block; font-size: 1.8rem; margin-top: 8px; }
+.dhikr-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 12px;
+}
+.dhikr-row button, .ghost {
+  background: #c4a35a;
+  color: #0b1f3a;
+  border: 0;
+  border-radius: 10px;
+  font-size: 1.4rem;
+  font-weight: 800;
+  width: 56px;
+  height: 48px;
+}
+#dhikr-count { font-size: 1.3rem; font-variant-numeric: tabular-nums; min-width: 80px; }
+.ghost { width: auto; padding: 10px 16px; margin-top: 10px; font-size: 1rem; }
